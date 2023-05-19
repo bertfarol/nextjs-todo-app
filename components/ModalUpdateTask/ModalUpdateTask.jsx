@@ -1,10 +1,13 @@
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import TextInput from "../TextInput";
+import Button from "../Button";
+import Form from "../Form";
 
 export default function ModalUpdateTask({ task, taskId, onEdit, onCancel }) {
   const [updatedTask, setUpdatedTask] = useState(task);
 
-  const onUpdate = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     onEdit(taskId, updatedTask);
     onCancel();
@@ -13,35 +16,29 @@ export default function ModalUpdateTask({ task, taskId, onEdit, onCancel }) {
   return (
     <div className="w-full lg:w-10/12 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-md z-10 bg-white rounded-md">
       <div className="px-4 pt-2.5 pb-2 border-b flex items-center">
-        <PencilSquareIcon className="w-6 h-6 mr-0.5 mb-0.5 text-blue-500" />
+        <PencilSquareIcon className="w-5 h-5 mr-1 mb-0.5 text-blue-500" />
         <h2 className="text-lg font-bold text-gray-500 uppercase">Edit</h2>
       </div>
-      <form onSubmit={onUpdate} className="p-4">
+      <Form onSubmit={onSubmit} className="p-4">
         <div className="mb-4">
           <p className="text-sm text-gray-400 pl-0.5">Details</p>
-          <input
+          <TextInput
             value={updatedTask}
             onChange={(e) => setUpdatedTask(e.target.value)}
             placeholder={task}
-            type="text"
-            className="w-full px-2.5 py-1.5 bg-gray-100/80 border rounded-md outline-none grow focus:bg-transparent"
           />
         </div>
         <div className="flex justify-end">
-          <div
+          <Button
+            type="button"
+            style="secondary"
             onClick={onCancel}
-            className="px-3 py-1 mr-3 text-base text-gray-500 bg-transparent border border-gray-200 rounded-md cursor-pointer"
-          >
-            Cancel
-          </div>
-          <button
-            type="submit"
-            className="px-3 py-1 text-base text-white duration-300 bg-green-700 border border-green-700 rounded-md hover:shadow-md hover:bg-green-700/90 hover:border-green-700/90"
-          >
-            Update
-          </button>
+            children="Cancel"
+            className="mr-3"
+          />
+          <Button type="submit" children="Update" />
         </div>
-      </form>
+      </Form>
     </div>
   );
 }
