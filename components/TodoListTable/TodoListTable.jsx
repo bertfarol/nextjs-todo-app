@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { currentDate } from "../utils/date";
-import Button from "../Button";
 import InputTask from "../InputTask";
-import TaskRow from "../TaskRow";
 import TaskTable from "../TaskTable";
 
 export default function TodoListTable({ tasks }) {
