@@ -1,3 +1,4 @@
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export default function ModalUpdateTask({ task, taskId, onEdit, onCancel }) {
@@ -7,14 +8,13 @@ export default function ModalUpdateTask({ task, taskId, onEdit, onCancel }) {
     e.preventDefault();
     onEdit(taskId, updatedTask);
     onCancel();
-  }
+  };
 
   return (
     <div className="w-full lg:w-10/12 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-md z-10 bg-white rounded-md">
-      <div className="px-4 pt-2 border-b">
-        <h2 className="mb-1 text-lg font-bold text-gray-500 uppercase">
-          Update Task
-        </h2>
+      <div className="px-4 pt-2.5 pb-2 border-b flex items-center">
+        <PencilSquareIcon className="w-6 h-6 mr-0.5 mb-0.5 text-blue-500" />
+        <h2 className="text-lg font-bold text-gray-500 uppercase">Edit</h2>
       </div>
       <form onSubmit={onUpdate} className="p-4">
         <div className="mb-4">
