@@ -6,7 +6,7 @@ const secondaryBtn =
 export default function Button({
   onClick,
   disabled,
-  children,
+  btnName,
   className,
   style,
   type,
@@ -25,7 +25,7 @@ export default function Button({
         "px-3 py-1.5 text-base duration-300 border rounded-md hover:shadow-md disabled:opacity-50"
       }
     >
-      {children}
+      {btnName}
     </button>
   );
 }

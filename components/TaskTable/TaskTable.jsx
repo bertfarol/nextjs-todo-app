@@ -24,7 +24,7 @@ export default function TaskTable({ tasks, onTaskRemove, onTaskComplete, onTaskU
           onClick={onClearAll}
           disabled={false}
           className="mt-6"
-          children="Clear all"
+          btnName="Clear all"
         />
       )}
     </>
