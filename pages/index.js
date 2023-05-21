@@ -2,11 +2,6 @@ import TodoListTable from "@/modules/TodoListTable";
 import Head from "next/head";
 import { getTodos } from "@/sanity/sanity.utils";
 
-async function moreTodo() {
-   const tasks = await getTodos();
-   console.log(tasks);
-}
-moreTodo();
 export default function Home({ tasks }) {
   return (
     <main className="p-4 lg:p-24">
@@ -21,12 +16,13 @@ export default function Home({ tasks }) {
   );
 }
 
-export async function getServerSideProps(context) {
+
+// getServerSideProps;
+export const getStaticProps = async () => {
   const tasks = await getTodos();
-  console.log("what");
   return {
     props: {
       tasks,
     },
   };
-}
+};

@@ -3,10 +3,8 @@ import TaskTable from "./components/TaskTable";
 import InputTask from "./components/InputTask";
 
 export default function TodoListTable({ tasks:tasksProp }) {
-
   const [inputValue, setInputValue] = useState("");
   const [updatedTask, setUpdatedTask] = useState(tasksProp);
-
 
   const pendingTaskCtr = updatedTask.filter(
     (task) => task.completed === false
