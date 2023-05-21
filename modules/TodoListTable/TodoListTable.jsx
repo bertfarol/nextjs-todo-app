@@ -1,15 +1,13 @@
 import { useState} from "react";
-import { currentDate } from "../utils/date";
-import InputTask from "../InputTask";
-import TaskTable from "../TaskTable";
+import { currentDate } from "../../common/utils/date";
+import TaskTable from "./components/TaskTable";
+import InputTask from "./components/InputTask";
 
-export default function TodoListTable({ tasks }) {
-  const theTasks = tasks.length > 0 && tasks;
+export default function TodoListTable({ tasks:tasksProp }) {
 
   const [inputValue, setInputValue] = useState("");
-  const [updatedTask, setUpdatedTask] = useState(theTasks);
+  const [updatedTask, setUpdatedTask] = useState(tasksProp);
 
-  const dateToday = new Date();
 
   const pendingTaskCtr = updatedTask.filter(
     (task) => task.completed === false
@@ -21,7 +19,7 @@ export default function TodoListTable({ tasks }) {
     const newTask = {
       id: Math.floor(Math.random() * 100 + 1),
       details: inputValue,
-      date: currentDate(dateToday),
+      date: "sample date",
       completed: false,
     };
     setUpdatedTask([...updatedTask, newTask]);
@@ -31,7 +29,7 @@ export default function TodoListTable({ tasks }) {
   /* Update Completed */
   const handleCompletedTask = (taskId, isCompleted) => {
     const updateCompletedTask = updatedTask.map((task) => {
-      if (task.id === taskId) return { ...task, completed: !isCompleted };
+      if (task._id === taskId) return { ...task, completed: !isCompleted };
       return task;
     });
     setUpdatedTask(updateCompletedTask);
@@ -40,7 +38,7 @@ export default function TodoListTable({ tasks }) {
   /* Update Task Details */
   const handleUpdateTask = (taskId, updatedDetails) => {
     const updateTask = updatedTask.map((task) => {
-      if (task.id === taskId) return { ...task, details: updatedDetails };
+      if (task._id === taskId) return { ...task, details: updatedDetails };
       return task;
     });
     setUpdatedTask(updateTask);
@@ -48,7 +46,7 @@ export default function TodoListTable({ tasks }) {
 
   /* Delete Single Task */
   const handleDeleteTask = (taskId) => {
-    const deletedTask = (task) => task.filter((task) => task.id !== taskId);
+    const deletedTask = (task) => task.filter((task) => task._id !== taskId);
     setUpdatedTask(deletedTask);
   };
 

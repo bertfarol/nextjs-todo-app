@@ -1,5 +1,5 @@
-import Button from "../Button";
-import TextInput from "../TextInput";
+import Button from "@/common/components/Button";
+import TextInput from "@/common/components/TextInput";
 
 export default function InputTask({
   onTextInputChange,

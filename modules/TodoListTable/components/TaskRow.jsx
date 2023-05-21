@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import TaskMenu from "../TaskMenu";
-import ModalUpdateTask from "../ModalUpdateTask";
+import ModalUpdateTask from "./ModalUpdateTask";
+import TaskMenu from "./TaskMenu";
+import { currentDate } from "@/common/utils/date";
 
 export default function TaskRow({
   task,
@@ -19,7 +20,6 @@ export default function TaskRow({
   return (
     <>
       <div
-        key={task.id}
         className={
           (task.completed ? "border-green-600 shadow bg-green-100" : "") +
           " duration-300 border-b py-3 pl-0.5"
@@ -37,7 +37,8 @@ export default function TaskRow({
             </div>
             <div className="flex items-center px-2 text-sm text-gray-400">
               <CalendarDaysIcon className="w-4 h-4 mr-1" />
-              <p className="pt-0.5">{task.date}</p>
+              <p className="pt-0.5">{currentDate(task._createdAt)}</p>
+              <p className="pt-0.5">{task.completed}</p>
             </div>
           </div>
           <TaskMenu
@@ -48,7 +49,7 @@ export default function TaskRow({
         </div>
         {openModal && (
           <ModalUpdateTask
-            taskId={task.id}
+            taskId={task._id}
             task={task.details}
             onEdit={onTaskUpdate}
             onCancel={handleModalOpen}

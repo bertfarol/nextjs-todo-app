@@ -1,16 +1,22 @@
-import TaskRow from "@/components/TaskRow";
-import Button from "../Button";
+import Button from "@/common/components/Button";
+import TaskRow from "./TaskRow";
 
-export default function TaskTable({ tasks, onTaskRemove, onTaskComplete, onTaskUpdate, onClearAll }) {
+export default function TaskTable({
+  tasks,
+  onTaskRemove,
+  onTaskComplete,
+  onTaskUpdate,
+  onClearAll,
+}) {
   const rows = [];
 
   tasks.map((task) => {
     rows.push(
       <TaskRow
         task={task}
-        key={task.id}
-        onTaskComplete={() => onTaskComplete(task.id, task.completed)}
-        onTaskRemove={() => onTaskRemove(task.id)}
+        key={task._id}
+        onTaskComplete={() => onTaskComplete(task._id, task.completed)}
+        onTaskRemove={() => onTaskRemove(task._id)}
         onTaskUpdate={onTaskUpdate}
       />
     );

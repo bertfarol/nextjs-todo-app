@@ -1,7 +1,13 @@
-import TodoListTable from "@/components/TodoListTable/";
+import TodoListTable from "@/modules/TodoListTable";
 import Head from "next/head";
+import { getTodos } from "@/sanity/sanity.utils";
 
-export default function Home() {
+async function moreTodo() {
+   const tasks = await getTodos();
+   console.log(tasks);
+}
+moreTodo();
+export default function Home({ tasks }) {
   return (
     <main className="p-4 lg:p-24">
       <Head>
@@ -10,22 +16,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TodoListTable tasks={APITASK} />
+      <TodoListTable tasks={tasks} />
     </main>
   );
 }
 
-const APITASK = [
-  {
-    id: 1,
-    details: "Sample Task: create todo app using next js",
-    date: "18 May 2023",
-    completed: false,
-  },
-  {
-    id: 2,
-    details: "Add more task for each day",
-    date: "19 May 2023",
-    completed: false,
-  },
-];
+export async function getServerSideProps(context) {
+  const tasks = await getTodos();
+  console.log("what");
+  return {
+    props: {
+      tasks,
+    },
+  };
+}

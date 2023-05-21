@@ -1,7 +1,8 @@
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import TextInput from "../TextInput";
-import Button from "../Button";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import Button from "@/common/components/Button";
+import TextInput from "@/common/components/TextInput";
+
 
 export default function ModalUpdateTask({ task, taskId, onEdit, onCancel }) {
   const [updatedTask, setUpdatedTask] = useState(task);
