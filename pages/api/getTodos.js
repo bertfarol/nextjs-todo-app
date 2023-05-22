@@ -1,6 +1,6 @@
-import { createClient, groq } from "next-sanity";
+import sanity from "@/sanity/lib/client-config";
 
-const feedQuery = groq`
+const feedQuery = `
     *[_type == "todo"] {
     _id,
     ...
@@ -8,11 +8,7 @@ const feedQuery = groq`
 `;
 
 export default async function handler(req, res) {
-  const client = createClient({
-    projectId: "0wtsa0of",
-    dataset: "production",
-    apiVersion: "2023-05-20",
-  });
-  const todos = await client.fetch(feedQuery);
+  res.setHeader("Cache-Control", "no-store");
+  const todos = await sanity.fetch(feedQuery);
   res.status(200).json(todos);
 }
