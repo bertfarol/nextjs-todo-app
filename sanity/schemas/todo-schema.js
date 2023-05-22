@@ -18,9 +18,11 @@ const todo = {
       title: "Task completed?",
       name: "completed",
       type: "boolean",
+      initialValue: false,
     },
   ],
 };
 
 
 export default todo;
+

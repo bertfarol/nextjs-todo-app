@@ -3,7 +3,7 @@ import TextInput from "@/common/components/TextInput";
 
 export default function InputTask({
   onTextInputChange,
-  inputValue,
+  userInput,
   onSubmit,
   pendingTask,
 }) {
@@ -13,12 +13,12 @@ export default function InputTask({
       <form onSubmit={onSubmit} className="flex">
         <TextInput
           onChange={(e) => onTextInputChange(e.target.value)}
-          value={inputValue}
+          value={userInput}
           placeholder="Add new task"
         />
         <Button
           className="ml-2"
-          disabled={inputValue.length > 0 ? false : true}
+          disabled={userInput.length > 0 ? false : true}
           btnName="Add"
         />
       </form>
