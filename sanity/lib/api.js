@@ -11,7 +11,7 @@ const headers = {
 
 export async function getAllItems() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos?timestamp=${Date.now()}`,
     {
       cache: "no-store",
     }

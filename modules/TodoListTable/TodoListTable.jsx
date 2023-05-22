@@ -76,6 +76,9 @@ export default function TodoListTable() {
       id="task-card"
       className="relative max-w-2xl p-3 bg-white shadow-2xl lg:p-6 rounded-xl"
     >
+      <button className="p-2 text-white bg-black" onClick={fetchData}>
+        Refresh
+      </button>
       <InputTask
         userInput={userInput}
         onTextInputChange={setUserInput}
