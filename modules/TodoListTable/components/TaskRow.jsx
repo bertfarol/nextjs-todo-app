@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import ModalUpdateTask from "./ModalUpdateTask";
 import TaskMenu from "./TaskMenu";
@@ -11,6 +11,11 @@ export default function TaskRow({
   onTaskUpdate,
 }) {
   const [openModal, setOpenModal] = useState(false);
+  const [date, setDate] = useState(null);
+
+  useEffect(() => {
+    setDate(currentDate(task._createdAt));
+  }, []);
 
   const handleModalOpen = () => {
     document.getElementById("task-card").classList.toggle("modal-open");
@@ -37,7 +42,7 @@ export default function TaskRow({
             </div>
             <div className="flex items-center px-2 text-sm text-gray-400">
               <CalendarDaysIcon className="w-4 h-4 mr-1" />
-              <p className="pt-0.5">{currentDate(task._createdAt)}</p>
+              <p className="pt-0.5">{date}</p>
               <p className="pt-0.5">{task.completed}</p>
             </div>
           </div>

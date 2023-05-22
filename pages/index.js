@@ -2,6 +2,16 @@ import TodoListTable from "@/modules/TodoListTable";
 import Head from "next/head";
 import { getTodos } from "@/sanity/sanity.utils";
 
+export const getStaticProps = async () => {
+  const tasks = await getTodos();
+  return {
+    props: {
+      tasks,
+    },
+  };
+};
+
+
 export default function Home({ tasks }) {
   return (
     <main className="p-4 lg:p-24">
@@ -17,12 +27,3 @@ export default function Home({ tasks }) {
 }
 
 
-// getServerSideProps;
-export const getStaticProps = async () => {
-  const tasks = await getTodos();
-  return {
-    props: {
-      tasks,
-    },
-  };
-};
