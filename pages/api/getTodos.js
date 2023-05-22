@@ -10,7 +10,7 @@ const feedQuery = `
 `;
 
 export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Cache-Control", "no-store, must-revalidate");
   const todos = await sanity.fetch(feedQuery);
   res.status(200).json(todos);
 }

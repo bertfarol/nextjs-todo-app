@@ -15,6 +15,7 @@ export default function TodoListTable() {
     try {
       const itemsData = await getAllItems();
       setTodoList(itemsData);
+      console.log(itemsData);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
