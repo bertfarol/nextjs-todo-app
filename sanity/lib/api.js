@@ -10,9 +10,11 @@ const headers = {
 };
 
 export async function getAllItems() {
-   const query = `*[_type == "todo"]`;
-   const response = await sanity.fetch(query, { cache: "no-store" });
-   return response;
+  const response = await fetch(`http://localhost:3000/api/getTodos`, {
+    cache: 'no-store'
+  });
+   const data = await response.json();
+   return data;
 }
 
 export async function getItemById(itemId) {

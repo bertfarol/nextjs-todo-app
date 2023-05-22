@@ -3,7 +3,9 @@ import sanity from "@/sanity/lib/client-config";
 const feedQuery = `
     *[_type == "todo"] {
     _id,
-    ...
+    _createdAt,
+    details,
+    completed,
     } | order(_createdAt desc)
 `;
 

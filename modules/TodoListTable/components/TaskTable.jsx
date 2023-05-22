@@ -24,7 +24,7 @@ export default function TaskTable({
 
   return (
     <>
-      {rows}
+      {tasks.length > 0 && rows}
       {tasks.length > 0 && (
         <Button
           onClick={onClearAll}
