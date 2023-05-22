@@ -1,19 +1,7 @@
 import TodoListTable from "@/modules/TodoListTable";
 import Head from "next/head";
-// import { getTodos } from "@/sanity/sanity.utils";
 
-// export const getStaticProps = async () => {
-//   const tasks = await getTodos();
-//   return {
-//     props: {
-//       tasks,
-//     },
-//   };
-// };
-
-// export default function Home({ tasks }) {
 export default function Home() {
-
   return (
     <main className="p-4 lg:p-24">
       <Head>
@@ -22,7 +10,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <TodoListTable tasks={todoList} /> */}
       <TodoListTable />
     </main>
   );

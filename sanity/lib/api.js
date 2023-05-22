@@ -6,13 +6,13 @@ const API_TOKEN =
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${API_TOKEN}`,
-  "Cache-Control": "no-cache, no-store, must-revalidate",
+  cache: "no-store",
 };
 
 export async function getAllItems() {
-  return sanity.fetch('*[_type == "todo"]', {
-    headers,
-  });
+   const query = `*[_type == "todo"]`;
+   const response = await sanity.fetch(query, { cache: "no-store" });
+   return response;
 }
 
 export async function getItemById(itemId) {
