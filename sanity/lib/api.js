@@ -10,9 +10,12 @@ const headers = {
 };
 
 export async function getAllItems() {
-  const response = await fetch(`http://localhost:3000/api/getTodos`, {
-    cache: 'no-store'
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos`,
+    {
+      cache: "no-store",
+    }
+  );
    const data = await response.json();
    return data;
 }
