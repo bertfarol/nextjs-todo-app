@@ -10,7 +10,9 @@ const headers = {
 };
 
 export async function getAllItems() {
-  return sanity.fetch('*[_type == "todo"]');
+  return sanity.fetch('*[_type == "todo"]', {
+    headers,
+  });
 }
 
 export async function getItemById(itemId) {
