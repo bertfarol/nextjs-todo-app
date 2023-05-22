@@ -6,6 +6,7 @@ const API_TOKEN =
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${API_TOKEN}`,
+  "Cache-Control": "no-cache, no-store, must-revalidate",
 };
 
 export async function getAllItems() {
