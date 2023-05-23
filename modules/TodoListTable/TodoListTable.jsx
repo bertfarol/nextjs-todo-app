@@ -60,7 +60,7 @@ export default function TodoListTable() {
   const handleDeleteTask = async (taskId) => {
     try {
       await deleteItem(taskId);
-      setTimeout(fetchData, 1000);
+      setTimeout(fetchData, 4000);
     } catch (error) {
       console.error("Error deleting task:", error);
     }
