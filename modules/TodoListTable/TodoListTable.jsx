@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
 import TaskTable from "./components/TaskTable";
 import InputTask from "./components/InputTask";
-import { deleteItem, getAllItems } from "@/sanity/lib/api";
+import { deleteItem, getAllData } from "@/sanity/lib/api";
 
-export default function TodoListTable() {
+export default function TodoListTable({ apiData, onRefresh }) {
   const [userInput, setUserInput] = useState("");
-  const [todoList, setTodoList] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [todoList, setTodoList] = useState(apiData);
 
   const fetchData = async () => {
     try {
-      const itemsData = await getAllItems();
+      const itemsData = await getAllData();
       setTodoList(itemsData);
-      console.log(itemsData);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
@@ -59,10 +54,21 @@ export default function TodoListTable() {
   /* Delete Single Task */
   const handleDeleteTask = async (taskId) => {
     try {
-      await deleteItem(taskId);
-      setTimeout(fetchData, 4000);
+      console.log("deleting on process...");
+      const response = await deleteItem(taskId);
+
+      if (response.status === 200) {
+        fetchData();
+        console.log("re-fetch data");
+      } else {
+        console.error("Error deleting item:", response);
+      }
+
+      console.log("I think its refetching...");
     } catch (error) {
       console.error("Error deleting task:", error);
+    } finally {
+      console.log("successfully deleted!");
     }
   };
 
