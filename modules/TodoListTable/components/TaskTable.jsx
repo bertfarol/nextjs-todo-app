@@ -10,7 +10,7 @@ export default function TaskTable({
 }) {
   const rows = [];
 
-  tasks.map((task) => {
+  tasks && tasks.map((task) => {
     rows.push(
       <TaskRow
         task={task}
@@ -24,8 +24,8 @@ export default function TaskTable({
 
   return (
     <>
-      {tasks.length > 0 && rows}
-      {tasks.length > 0 && (
+      {tasks && rows}
+      {tasks && (
         <Button
           onClick={onClearAll}
           disabled={false}

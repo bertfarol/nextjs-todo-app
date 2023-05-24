@@ -1,22 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskTable from "./components/TaskTable";
 import InputTask from "./components/InputTask";
-import { deleteItem, getAllData } from "@/sanity/lib/api";
+import { deleteItem } from "@/sanity/lib/api";
 
-export default function TodoListTable({ apiData, onRefresh }) {
+export default function TodoListTable({ apiData }) {
   const [userInput, setUserInput] = useState("");
-  const [todoList, setTodoList] = useState(apiData);
+  const [todoList, setTodoList] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      const itemsData = await getAllData();
-      setTodoList(itemsData);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
+  useEffect(() => {
+    setTodoList(apiData);
+  }, [apiData]);
 
-  const pendingTaskCtr = todoList.filter(
+
+  const pendingTaskCtr = apiData && apiData.filter(
     (task) => task.completed === false
   ).length;
 
@@ -58,7 +54,7 @@ export default function TodoListTable({ apiData, onRefresh }) {
       const response = await deleteItem(taskId);
 
       if (response.status === 200) {
-        fetchData();
+        // fetchData();
         console.log("re-fetch data");
       } else {
         console.error("Error deleting item:", response);
