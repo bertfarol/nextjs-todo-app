@@ -8,25 +8,21 @@ const API_TOKEN =
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${API_TOKEN}`,
-  cache: "no-store",
-  next: {
-    revalidate: 5,
-  },
 };
 
-export async function getAllData() {
-  const query = groq`
-    *[_type == "todo"] {
-    _id,
-    _createdAt,
-    details,
-    completed,
-    } | order(_createdAt desc)
-  `;
+export async function deleteItem(itemId) {
+  const mutations = [{ delete: { id: itemId } }];
 
-  const data = await sanity.fetch(query, { next: { revalidate: 5 } });
-
-  return data;
+  try {
+    const response = fetch(`${API_URL}/data/mutate/production`, {
+      headers,
+      method: "post",
+      body: JSON.stringify({ mutations }),
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Error deleting data");
+  }
 }
 
 export async function getItemById(itemId) {
@@ -55,30 +51,5 @@ export async function createItem(itemData) {
   }
 }
 
-export async function deleteItem(itemId) {
-  const mutations = [{ delete: { id: itemId } }];
 
-  try {
-    const response = fetch(`${API_URL}/data/mutate/production`, {
-      headers,
-      method: "post",
-      body: JSON.stringify({ mutations }),
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Error deleting data");
-  }
-}
 
-// export async function deleteItem(itemId) {
-//   const mutations = [{ delete: { id: itemId } }];
-
-//   fetch(`${API_URL}/data/mutate/production`, {
-//     headers,
-//     method: "post",
-//     body: JSON.stringify({ mutations }),
-//   })
-//     .then((response) => response.json())
-//     .then((result) => console.log(result))
-//     .catch((error) => console.error(error));
-// }
