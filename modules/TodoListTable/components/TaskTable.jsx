@@ -15,7 +15,9 @@ export default function TaskTable({
       <TaskRow
         task={task}
         key={task._id}
-        onTaskComplete={() => onTaskComplete(task._id, task.completed)}
+        onTaskComplete={() =>
+          onTaskComplete(task._id, !task.completed)
+        }
         onTaskRemove={() => onTaskRemove(task._id)}
         onTaskUpdate={onTaskUpdate}
       />

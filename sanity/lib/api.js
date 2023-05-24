@@ -1,55 +1,55 @@
-import { groq } from "next-sanity";
-import sanity from "./client-config";
-
-const API_URL = "https://0wtsa0of.api.sanity.io/v2023-05-20"; // Replace with your Sanity API URL
-const API_TOKEN =
-  "skokvaZL3QoYr8vyJdUBAbDeqgiLBECbgBfLZg1GhQw2o5OXvtFg4ik7MADJg0Vmz3hgnxvJBWoW2zvI6UOzYmcmPpazommpuIY4CJvNxTcm4AZqBNuRsbIT7qfvABkbqYphjVEBP8KZlS9uaxmRHpMg829PUyG4tfcF7LO8yWpV4UFgBgRn"; // Replace with your Sanity API token
-
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${API_TOKEN}`,
+  Authorization: `Bearer ${process.env.SANITY_API_TOKEN}`,
 };
 
-export async function deleteItem(itemId) {
-  const mutations = [{ delete: { id: itemId } }];
-
+const performMutation = (mutations) => {
   try {
-    const response = fetch(`${API_URL}/data/mutate/production`, {
-      headers,
-      method: "post",
-      body: JSON.stringify({ mutations }),
-    });
+    const response = fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/data/mutate/production`,
+      {
+        headers,
+        method: "post",
+        body: JSON.stringify({ mutations }),
+      }
+    );
     return response;
   } catch (error) {
     throw new Error("Error deleting data");
   }
-}
+};
 
-export async function getItemById(itemId) {
-  try {
-    const response = await fetch(`${API_URL}/production/todo/${itemId}`, {
-      headers,
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(`Error fetching item: ${error.message}`);
-  }
-}
+export const deleteItem = async (itemId) => {
+  const mutations = [{ delete: { id: itemId } }];
+  return performMutation(mutations);
+};
 
-export async function createItem(itemData) {
-  try {
-    const response = await fetch(`${API_URL}/production/todo`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(itemData),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(`Error creating item: ${error.message}`);
-  }
-}
+export const createItem = async (newDetails) => {
+  const mutations = [
+    {
+      create: {
+        _type: "todo",
+        details: newDetails,
+        completed: false,
+      },
+    },
+  ];
 
+  return performMutation(mutations);
+};
 
+export const updateItem = async (id, updatedDetails, isCompleted = false) => {
+  const mutations = [
+    {
+      patch: {
+        id: id,
+        set: {
+          details: updatedDetails, 
+          completed: isCompleted, 
+        },
+      },
+    },
+  ];
 
+  return performMutation(mutations);
+};
