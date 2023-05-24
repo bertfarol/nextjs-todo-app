@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const query = `*[_type == "todo"] { _id, _createdAt, details, completed, } `;
+    const query = `*[_type == "todo"] { details } | order(_createdAt desc) `;
     const data = await sanity.fetch(query);
 
     res.status(200).json(data);
