@@ -24,7 +24,7 @@ export async function getAllData() {
     } | order(_createdAt desc)
   `;
 
-  const data = await sanity.fetch(query, { next: { revalidate: 10 } });
+  const data = await sanity.fetch(query, { next: { revalidate: 5 } });
 
   return data;
 }
