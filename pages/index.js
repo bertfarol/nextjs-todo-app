@@ -7,7 +7,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Home() {
   const { data, error, mutate } = useSWR(
-    "http://localhost:3000/api/getTodos",
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos`,
     fetcher,
     {
       refreshInterval: 0, // Disable automatic refresh
@@ -18,7 +18,7 @@ export default function Home() {
   );
 
   const handleUpdateData = async () => {
-    await fetch("http://localhost:3000/api/getTodos");
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos`);
     mutate(); // Re-fetch the data
   };
 
