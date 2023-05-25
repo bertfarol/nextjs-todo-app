@@ -1,34 +1,22 @@
 import { useState } from "react";
 import TaskTable from "./components/TaskTable";
 import InputTask from "./components/InputTask";
+import ModalUpdateTask from "./components/ModalUpdateTask";
+import { addTodo, completedTask, deleteTask, updateTask } from "./lib/todoFunction";
 
 export default function TodoListTable({ apiData, mutate }) {
   const [userInput, setUserInput] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [modalProps, setModalProps] = useState({});
 
   const handleUpdateData = async () => {
-    console.log("Data is updated!");
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos`);
     mutate(); // Re-fetch the data
   };
 
   /* Delete Single Task */
   const handleDeleteTask = async (taskId) => {
-    try {
-      console.log("deleting on process..."); // TODO: replace this
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteTodo`, {
-        method: "post",
-        body: JSON.stringify({ id: taskId }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      mutate();
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    } finally {
-      console.log("successfully deleted!"); // TODO: replace this
-      handleUpdateData();
-    }
+    deleteTask(taskId, handleUpdateData);
   };
 
   /* Delete All Task */
@@ -39,90 +27,63 @@ export default function TodoListTable({ apiData, mutate }) {
   /* Create */
   const handleAddTask = async (e) => {
     e.preventDefault();
-    try {
-      setUserInput("");
-      console.log("Add new task on process..."); // TODO: replace this
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/createTodo`, {
-        method: "post",
-        body: JSON.stringify({ details: userInput }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      mutate();
-    } catch (error) {
-      console.error("Error adding task:", error);
-    } finally {
-      console.log("successfully Added!"); // TODO: replace this
-      handleUpdateData();
-    }
+    setUserInput("");
+    addTodo(userInput, handleUpdateData);
   };
 
-  /* Update Task Details */
+  /* Update Task */
   const handleUpdateTask = async (taskId, updatedDetails) => {
-    try {
-      console.log("Updating task on process..."); // TODO: replace this
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updateTodo`, {
-        method: "post",
-        body: JSON.stringify({ id: taskId, details: updatedDetails }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      mutate();
-    } catch (error) {
-      console.error("Error updating task:", error);
-    } finally {
-      console.log("successfully Updated!"); // TODO: replace this
-      handleUpdateData();
-    }
+    const task = { id: taskId, details: updatedDetails };
+    updateTask(task, mutate, handleUpdateData, handleModal);
   };
 
-  /* Update Completed */
+  /* Completed Task */
   const handleCompletedTask = async (taskId, isCompleted) => {
-    console.log(isCompleted);
-    try {
-      console.log("Updating task on process..."); // TODO: replace this
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updateTodo`, {
-        method: "post",
-        body: JSON.stringify({
-          id: taskId,
-          completed: isCompleted,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      mutate();
-    } catch (error) {
-      console.error("Error updating task:", error);
-    } finally {
-      console.log("successfully Updated!"); // TODO: replace this
-      handleUpdateData();
-    }
+    const task = { id: taskId, completed: isCompleted };
+    completedTask(task, mutate, handleUpdateData);
   };
 
-  const pendingTaskCtr =
-    apiData && apiData.filter((task) => task.completed === false).length;
+  /* Modal Update */
+  const handleModal = (taskId, taskDetails) => {
+    document.body.classList.toggle("modal-open");
+    setOpenModal(!openModal);
+    setModalProps({
+      id: taskId,
+      details: taskDetails,
+    });
+  };
+
+  const pendingTaskCtr = apiData.filter((task) => task.completed === false).length;
 
   return (
-    <div
-      id="task-card"
-      className="relative max-w-2xl p-3 bg-white shadow-2xl lg:p-6 rounded-xl"
-    >
-      <InputTask
-        userInput={userInput}
-        onTextInputChange={setUserInput}
-        onSubmit={handleAddTask}
-        pendingTask={pendingTaskCtr}
-      />
-      <TaskTable
-        tasks={apiData}
-        onTaskRemove={handleDeleteTask}
-        onTaskComplete={handleCompletedTask}
-        onTaskUpdate={handleUpdateTask}
-        onClearAll={handleDeleteAll}
-      />
-    </div>
+    <>
+      {openModal && (
+        <ModalUpdateTask
+          taskId={modalProps.id}
+          task={modalProps.details}
+          onEdit={handleUpdateTask}
+          onCancel={handleModal}
+        />
+      )}
+      <div
+        id="task-card"
+        className="mx-auto relative max-w-2xl p-3 lg:pb-8 bg-white shadow-2xl lg:p-6 rounded-xl"
+      >
+        <InputTask
+          userInput={userInput}
+          onTextInputChange={setUserInput}
+          onSubmit={handleAddTask}
+          pendingTask={pendingTaskCtr}
+        />
+        <TaskTable
+          tasks={apiData}
+          onTaskRemove={handleDeleteTask}
+          onTaskComplete={handleCompletedTask}
+          onTaskUpdate={handleUpdateTask}
+          onClearAll={handleDeleteAll}
+          onOpenModal={handleModal}
+        />
+      </div>
+    </>
   );
 }

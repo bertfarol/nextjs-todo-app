@@ -1,6 +1,7 @@
 import Head from "next/head";
 import TodoListTable from "@/modules/TodoListTable";
 import useSWR from "swr";
+import { Toaster } from "react-hot-toast";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -28,6 +29,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Toaster />
       {data ? (
         <TodoListTable apiData={data} mutate={mutate} />
       ) : (

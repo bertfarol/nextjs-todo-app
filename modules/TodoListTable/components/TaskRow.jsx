@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import ModalUpdateTask from "./ModalUpdateTask";
 import TaskMenu from "./TaskMenu";
 import { currentDate } from "@/common/utils/date";
 
@@ -9,18 +8,19 @@ export default function TaskRow({
   onTaskComplete,
   onTaskRemove,
   onTaskUpdate,
+  onOpenModal,
 }) {
-  const [openModal, setOpenModal] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
   const [date, setDate] = useState(null);
 
   useEffect(() => {
     setDate(currentDate(task._createdAt));
   }, []);
 
-  const handleModalOpen = () => {
-    document.getElementById("task-card").classList.toggle("modal-open");
-    setOpenModal(!openModal);
-  };
+  // const handleModalOpen = (task, taskId) => {
+  //   document.getElementById("task-card").classList.toggle("modal-open");
+  //   setOpenModal(!openModal);
+  // };
 
   return (
     <>
@@ -49,17 +49,17 @@ export default function TaskRow({
           <TaskMenu
             onRemove={onTaskRemove}
             onUpdate={onTaskComplete}
-            onEdit={handleModalOpen}
+            onEdit={() => onOpenModal(task._id, task.details)}
           />
         </div>
-        {openModal && (
+        {/* {openModal && (
           <ModalUpdateTask
             taskId={task._id}
             task={task.details}
             onEdit={onTaskUpdate}
             onCancel={handleModalOpen}
           />
-        )}
+        )} */}
       </div>
     </>
   );
