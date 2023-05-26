@@ -2,7 +2,13 @@ import { useState } from "react";
 import TaskTable from "./components/TaskTable";
 import InputTask from "./components/InputTask";
 import ModalUpdateTask from "./components/ModalUpdateTask";
-import { addTodo, completedTask, deleteTask, updateTask } from "./lib/todoFunction";
+import {
+  addTodo,
+  completedTask,
+  deleteTask,
+  updateTask,
+} from "./lib/todoUtils";
+import Layout from "./Layout";
 
 export default function TodoListTable({ apiData, mutate }) {
   const [userInput, setUserInput] = useState("");
@@ -12,16 +18,6 @@ export default function TodoListTable({ apiData, mutate }) {
   const handleUpdateData = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getTodos`);
     mutate(); // Re-fetch the data
-  };
-
-  /* Delete Single Task */
-  const handleDeleteTask = async (taskId) => {
-    deleteTask(taskId, handleUpdateData);
-  };
-
-  /* Delete All Task */
-  const handleDeleteAll = () => {
-    setTodoList([]);
   };
 
   /* Create */
@@ -35,6 +31,11 @@ export default function TodoListTable({ apiData, mutate }) {
   const handleUpdateTask = async (taskId, updatedDetails) => {
     const task = { id: taskId, details: updatedDetails };
     updateTask(task, mutate, handleUpdateData, handleModal);
+  };
+
+  /* Delete Single Task */
+  const handleDeleteTask = async (taskId) => {
+    deleteTask(taskId, handleUpdateData);
   };
 
   /* Completed Task */
@@ -53,7 +54,9 @@ export default function TodoListTable({ apiData, mutate }) {
     });
   };
 
-  const pendingTaskCtr = apiData.filter((task) => task.completed === false).length;
+  const pendingTaskCtr = apiData.filter(
+    (task) => task.completed === false
+  ).length;
 
   return (
     <>
@@ -65,10 +68,7 @@ export default function TodoListTable({ apiData, mutate }) {
           onCancel={handleModal}
         />
       )}
-      <div
-        id="task-card"
-        className="mx-auto relative max-w-2xl p-3 lg:pb-8 bg-white shadow-2xl lg:p-6 rounded-xl"
-      >
+      <Layout>
         <InputTask
           userInput={userInput}
           onTextInputChange={setUserInput}
@@ -80,10 +80,9 @@ export default function TodoListTable({ apiData, mutate }) {
           onTaskRemove={handleDeleteTask}
           onTaskComplete={handleCompletedTask}
           onTaskUpdate={handleUpdateTask}
-          onClearAll={handleDeleteAll}
           onOpenModal={handleModal}
         />
-      </div>
+      </Layout>
     </>
   );
 }

@@ -1,13 +1,19 @@
 import {
   TrashIcon,
-  PencilSquareIcon,
-  CheckCircleIcon,
+  PencilIcon,
+  CheckIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
 
-export default function TaskMenu({ onUpdate, onRemove, onEdit }) {
-  const [openMenu, setOpenMenu] = useState(false);
+export default function TaskMenu({
+  onUpdate,
+  onRemove,
+  onEdit,
+  setOpenMenu,
+  openMenu,
+}) {
+  // const [openMenu, setOpenMenu] = useState(false);
 
   let menuRef = useRef();
 
@@ -15,11 +21,17 @@ export default function TaskMenu({ onUpdate, onRemove, onEdit }) {
     let handler = (e) => {
       if (!menuRef?.current.contains(e.target)) {
         setOpenMenu(false);
+        document.body.classList.remove("menu-open");
       }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   });
+
+  const handleOpenMenu = () => {
+    document.body.classList.add("menu-open");
+    setOpenMenu(!openMenu);
+  };
 
   const onComplete = () => {
     onUpdate();
@@ -37,27 +49,36 @@ export default function TaskMenu({ onUpdate, onRemove, onEdit }) {
   return (
     <div ref={menuRef} className="relative">
       <EllipsisHorizontalIcon
-        onClick={() => setOpenMenu(!openMenu)}
-        className="text-gray-400 duration-300 hover:text-green-700 w-8 h-8 cursor-pointer mx-2 my-1.5 hover:bg-green-500/10 rounded-full p-1"
+        onClick={handleOpenMenu}
+        className="text-[#3E78AD] duration-300 w-10 cursor-pointer mr-4 my-1.5 hover:bg-[#3E78AD]/10 rounded-full p-1"
       />
       {openMenu && (
-        <ul className="absolute z-10 bg-white border rounded-lg shadow select-none top-6 right-10 border-grey-100">
-          <li className="px-3 py-2 duration-300 cursor-pointer hover:bg-gray-100">
-            <span onClick={onComplete} className="flex items-center text-base">
-              <CheckCircleIcon className="w-5 h-5 mr-2 text-green-600" />
+        <ul className="absolute z-10 p-2.5 bg-white border rounded-lg shadow-lg select-none top-6 right-10 border-grey-100 lg:w-[244px] w-[200px]">
+          <li className="group p-2 rounded-md cursor-pointer hover:bg-[#3E78AD] hover:text-white text-[#464D52]">
+            <span
+              onClick={onComplete}
+              className="flex items-center justify-between text-lg "
+            >
               Done
+              <CheckIcon className="w-5 mr-2 duration-300 group-hover:w-6" />
             </span>
           </li>
-          <li className="px-3.5 py-2 duration-300 cursor-pointer hover:bg-gray-100">
-            <span onClick={onEditTask} className="flex items-center text-base">
-              <PencilSquareIcon className="w-5 h-5 mr-2 text-blue-500" />
-              Edit
+          <li className="group p-2 rounded-md cursor-pointer hover:bg-[#3E78AD] hover:text-white text-[#464D52]">
+            <span
+              onClick={onEditTask}
+              className="flex items-center justify-between text-lg "
+            >
+              Edit task
+              <PencilIcon className="w-5 mr-2 duration-300 group-hover:w-6" />
             </span>
           </li>
-          <li className="px-3.5 py-2 duration-300 cursor-pointer hover:bg-gray-100">
-            <span onClick={onDelete} className="flex items-center text-base">
-              <TrashIcon className="w-5 h-5 mr-2 text-red-600" />
-              Delete
+          <li className="group p-2 rounded-md cursor-pointer hover:bg-[#3E78AD] hover:text-white text-[#464D52]">
+            <span
+              onClick={onDelete}
+              className="flex items-center justify-between text-lg "
+            >
+              Delete task
+              <TrashIcon className="w-5 mr-2 duration-300 group-hover:w-6" />
             </span>
           </li>
         </ul>

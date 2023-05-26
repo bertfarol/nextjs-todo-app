@@ -7,27 +7,22 @@ export default function TaskRow({
   task,
   onTaskComplete,
   onTaskRemove,
-  onTaskUpdate,
   onOpenModal,
 }) {
-  // const [openModal, setOpenModal] = useState(false);
   const [date, setDate] = useState(null);
+  const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
     setDate(currentDate(task._createdAt));
   }, []);
 
-  // const handleModalOpen = (task, taskId) => {
-  //   document.getElementById("task-card").classList.toggle("modal-open");
-  //   setOpenModal(!openModal);
-  // };
-
   return (
     <>
       <div
         className={
-          (task.completed ? "border-green-600 shadow bg-green-100" : "") +
-          " duration-300 border-b py-3 pl-0.5"
+          (task.completed ? "shadow " : "") +
+          (openMenu ? "z-10 relative shadow-md" : "") +
+          " duration-300 py-5 pl-4 lg:pl-8 bg-[#F7F9FB] mb-3 rounded-2xl"
         }
       >
         <div className="flex">
@@ -35,31 +30,25 @@ export default function TaskRow({
             <div
               className={
                 (task.completed ? "line-through" : "") +
-                " bg-transparent outline-none focus:bg-gray-200/60 px-2 font-bold	"
+                " bg-transparent outline-none focus:bg-gray-200/60 px-2 font-semibold	text-lg lg:text-xl text-[#3C4D5E]"
               }
             >
               {task.details}
             </div>
-            <div className="flex items-center px-2 text-sm text-gray-400">
-              <CalendarDaysIcon className="w-4 h-4 mr-1" />
+            <div className="flex items-center px-2 text-base text-[#8995A0]">
+              <CalendarDaysIcon className="w-5 mr-1.5" />
               <p className="pt-0.5">{date}</p>
               <p className="pt-0.5">{task.completed}</p>
             </div>
           </div>
           <TaskMenu
+            setOpenMenu={setOpenMenu}
+            openMenu={openMenu}
             onRemove={onTaskRemove}
             onUpdate={onTaskComplete}
             onEdit={() => onOpenModal(task._id, task.details)}
           />
         </div>
-        {/* {openModal && (
-          <ModalUpdateTask
-            taskId={task._id}
-            task={task.details}
-            onEdit={onTaskUpdate}
-            onCancel={handleModalOpen}
-          />
-        )} */}
       </div>
     </>
   );

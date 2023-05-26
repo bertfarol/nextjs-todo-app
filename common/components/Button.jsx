@@ -1,5 +1,5 @@
 const primaryBtn =
-  "text-white bg-green-700 border-green-700 hover:bg-green-700/90 hover:border-green-700/90";
+  "text-white bg-[#3E78AD] border-[#3E78AD] hover:bg-[#3E78AD]/90 hover:border-[#3E78AD]/90";
 const secondaryBtn =
   "text-gray-500 bg-transparent border-gray-200";
 

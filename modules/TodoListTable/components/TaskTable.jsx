@@ -8,7 +8,6 @@ export default function TaskTable({
   onTaskRemove,
   onTaskComplete,
   onTaskUpdate,
-  onClearAll,
   onOpenModal,
 }) {
   const rows = [];
@@ -33,7 +32,8 @@ export default function TaskTable({
     });
 
   return (
-    <div ref={parent} className="mt-3">
+    <div ref={parent} className="mt-6 border-t border-[#F0F0F0] pt-7">
+      <h1 className="text-[#98A7B5] font-semibold text-xl mb-5">TODO</h1>
       {tasks && rows}
     </div>
   );

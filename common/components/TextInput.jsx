@@ -8,7 +8,7 @@ export default function TextInput({ onChange, value, placeholder, className }) {
       className={
         className +
         " " +
-        "px-2.5 py-1.5 bg-gray-100/80 border rounded-md outline-none w-full focus:bg-transparent"
+        "py-4 px-6 bg-[#ECF1F5] focus:outline-none focus:ring focus:ring-[#78A1C6] rounded-[40px] w-full focus:bg-transparent text-2xl text-[#3E78AD]"
       }
     />
   );
