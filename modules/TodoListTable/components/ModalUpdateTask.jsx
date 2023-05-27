@@ -22,7 +22,7 @@ export default function ModalUpdateTask({ task, taskId, onEdit, onCancel }) {
         <div className="mb-4">
           <p className="text-sm text-gray-400 pl-0.5 mb-2">Details</p>
           <TextInput
-            className="text-lg lg:px-4 lg:py-2"
+            className="text-lg bg-[#ECF1F5] lg:px-4 lg:py-2"
             value={updatedTask}
             onChange={(e) => setUpdatedTask(e.target.value)}
             placeholder={task}

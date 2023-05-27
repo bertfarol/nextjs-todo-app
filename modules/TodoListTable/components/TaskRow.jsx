@@ -22,7 +22,7 @@ export default function TaskRow({
         className={
           (task.completed ? "shadow " : "") +
           (openMenu ? "z-10 relative shadow-md" : "") +
-          " duration-300 py-5 pl-4 lg:pl-8 bg-[#F7F9FB] mb-3 rounded-2xl"
+          " duration-300 py-5 pl-4 lg:pl-8 bg-white mb-3 rounded-2xl"
         }
       >
         <div className="flex">

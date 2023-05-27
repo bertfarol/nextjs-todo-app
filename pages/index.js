@@ -33,7 +33,9 @@ export default function Home() {
       {data ? (
         <TodoListTable apiData={data} mutate={mutate} />
       ) : (
-        <p>Loading...</p>
+        <p className="absolute top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <img src="/todo-logo.png" />
+        </p>
       )}
     </main>
   );

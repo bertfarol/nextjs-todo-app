@@ -15,7 +15,7 @@ export default function InputTask({
           onChange={(e) => onTextInputChange(e.target.value)}
           value={userInput}
           placeholder="Add new task"
-          className="lg:px-8 lg:py-6"
+          className=" lg:px-8 lg:py-6 bg-white/75"
         />
         {userInput.length > 0 && (
           <button

@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-light: #ECF1F5;
 }
 
 html {
@@ -15,6 +13,7 @@ html {
 html,
 body {
   height: 100%;
+  background: var(--background-light);
 }
 
 input {
