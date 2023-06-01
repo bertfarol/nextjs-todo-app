@@ -4,7 +4,7 @@ import {
   CheckIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function TaskMenu({
   onUpdate,
@@ -13,8 +13,6 @@ export default function TaskMenu({
   setOpenMenu,
   openMenu,
 }) {
-  // const [openMenu, setOpenMenu] = useState(false);
-
   let menuRef = useRef();
 
   useEffect(() => {
@@ -36,21 +34,24 @@ export default function TaskMenu({
   const onComplete = () => {
     onUpdate();
     setOpenMenu(false);
+    document.body.classList.remove("menu-open");
   };
   const onDelete = () => {
     onRemove();
     setOpenMenu(false);
+    document.body.classList.remove("menu-open");
   };
   const onEditTask = () => {
     onEdit();
     setOpenMenu(false);
+    document.body.classList.remove("menu-open");
   };
 
   return (
     <div ref={menuRef} className="relative">
       <EllipsisHorizontalIcon
         onClick={handleOpenMenu}
-        className="text-[#3E78AD] duration-300 w-10 cursor-pointer mr-4 my-1.5 hover:bg-[#3E78AD]/10 rounded-full p-1"
+        className="text-[#3E78AD] duration-300 w-10 cursor-pointer my-1.5 hover:bg-[#3E78AD]/10 rounded-full p-1"
       />
       {openMenu && (
         <ul className="absolute z-10 p-2.5 bg-white border rounded-lg shadow-lg select-none top-6 right-10 border-grey-100 lg:w-[244px] w-[200px]">
