@@ -15,7 +15,7 @@ const performMutation = (mutations) => {
     );
     return response;
   } catch (error) {
-    throw new Error("Error deleting data");
+    throw new Error("Error mutating data");
   }
 };
 

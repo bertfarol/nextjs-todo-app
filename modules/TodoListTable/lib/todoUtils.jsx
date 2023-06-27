@@ -31,7 +31,6 @@ export const addTodo = async (newDetails, handleUpdateData) => {
         "Content-Type": "application/json",
       },
     });
-    // mutate();
   } catch (error) {
     console.error("Error adding task:", error);
   } finally {

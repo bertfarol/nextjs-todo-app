@@ -9,6 +9,8 @@ import {
   updateTask,
 } from "./lib/todoUtils";
 import Layout from "./Layout";
+import { toast } from "react-hot-toast";
+import Button from "@/common/components/Button";
 
 export default function TodoListTable({ apiData, mutate }) {
   const [userInput, setUserInput] = useState("");
@@ -35,7 +37,24 @@ export default function TodoListTable({ apiData, mutate }) {
 
   /* Delete Single Task */
   const handleDeleteTask = async (taskId) => {
-    deleteTask(taskId, handleUpdateData);
+    toast(
+      (t) => (
+        <span>
+          Are you sure?
+          <Button
+            btnName="Yes"
+            onClick={() => {
+              toast.dismiss(t.id);
+              deleteTask(taskId, handleUpdateData);
+            }}
+            className="ml-2"
+          />
+        </span>
+      ),
+      {
+        duration: 10000,
+      }
+    );
   };
 
   /* Completed Task */

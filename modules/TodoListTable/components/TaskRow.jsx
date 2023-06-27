@@ -24,11 +24,7 @@ export default function TaskRow({
   return (
     <>
       <div
-        className={
-          (task.completed ? "shadow " : "") +
-          (openMenu ? "z-10 relative shadow-md" : "") +
-          " duration-300 py-4 px-4 lg:px-5 bg-white mb-3 rounded-2xl"
-        }
+        className={`${task.completed ? "bg-[#f7f9fb]" : "shadow bg-white"} ${openMenu && "z-10 relative shadow-md"} duration-300 py-4 px-4 lg:px-5  mb-3 rounded-2xl`}
       >
         <div className="flex items-center">
           <div className="grow">
